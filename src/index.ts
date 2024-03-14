@@ -40,7 +40,7 @@ app.post('/enqueue', async (req: express.Request, res: express.Response) => {
         await publisher.lPush('upload-queue', id);
         await publisher.hSet('upload-status', id, 'enqueued');
 
-        res.json({ id: id });
+        res.json({ id: id, status: 'enqueued' });
     } catch (err: any) {
         res.status(500).json({ message: err.message });
     }
