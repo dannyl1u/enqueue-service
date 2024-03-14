@@ -29,9 +29,6 @@ app.post('/enqueue', async (req: express.Request, res: express.Response) => {
     // upload a terraform file to gcp bucket
     publisher.lPush('upload-queue', id);
     publisher.hSet('upload-status', id, 'enqueued');
-    res.json({
-        id: id
-    });
     // upload main.tf to gcp bucket
     const filename = 'main.tf';
 
