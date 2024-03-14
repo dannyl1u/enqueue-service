@@ -23,7 +23,7 @@ const publisher = createClient({
 
 publisher.connect();
 
-app.post('/enqueue', (req: express.Request, res: express.Response) => {
+app.post('/enqueue', async (req: express.Request, res: express.Response) => {
     const { id } = req.body;
     // upload a terraform file to gcp bucket
     publisher.lPush('upload-queue', id);
@@ -43,7 +43,7 @@ app.post('/enqueue', (req: express.Request, res: express.Response) => {
         await publisher.hSet('upload-status', id, 'enqueued');
 
         res.json({ id: id });
-    } catch (err) {
+    } catch (err: any) {
         res.status(500).json({ message: err.message });
     }
 });
